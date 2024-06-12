@@ -1,19 +1,6 @@
 <?php
 include "connect.php";
 
-function getUserByUsername($conn, $username) {
-    $sql = "SELECT id, username, password_hash, email FROM Users WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    } else {
-        return null;
-    }
-}
 // Obtener el número total de tareas
 function getTotalTasks($conn) {
     $sql = "SELECT COUNT(*) AS total_tasks FROM Tasks";

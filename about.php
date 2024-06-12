@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+include_once "login_handler.php";
 require_once "funciones.php";
 
 if (!isset($_SESSION['user_id'])) {

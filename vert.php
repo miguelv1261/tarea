@@ -1,11 +1,11 @@
 
 <?php
-session_start();
+include_once "login_handler.php";
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit; }
-include 'funciones.php';
+
 $task_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $agent_id = $_SESSION['user_id']; // Asegúrate de que el agente esté autenticado y su ID esté en la sesión
 
@@ -117,8 +117,11 @@ if (!$task) {
             <p><strong>Estado:</strong> <?php echo htmlspecialchars($task['status']); ?></p>
             <p><strong>Creado en:</strong> <?php echo htmlspecialchars($task['created_at']); ?></p>
             <p><strong>Actualizado en:</strong> <?php echo htmlspecialchars($task['updated_at']); ?></p>
-
-             <h2>Hacer una Sugerencia</h2>
+        </div></div>
+        <br>
+        <div class="card">
+            <h2 class="card-header">Hacer una Sugerencia</h2>
+            <div class="card-body">
             <form method="post">
                 <div class="form-group">
                     <label for="suggested_price">Precio Sugerido:</label>
@@ -128,9 +131,18 @@ if (!$task) {
                     <label for="suggested_time">Tiempo Sugerido:</label>
                     <input type="text" class="form-control" id="suggested_time" name="suggested_time" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar Sugerencia</button>
+                <br>
+                <div class="text-center">
+                <button type="submit" class="btn btn-primary ">Enviar Sugerencia</button>
+                </div>
+                
             </form>
-            <h2>Sugerencias Anteriores</h2>
+            </div>
+
+        </div>
+        <br>
+        <div class="card">
+            <h2 class="card-header">Sugerencias Anteriores</h2>
             <?php if (!empty($suggestions)): ?>
                 <ul>
                     <?php foreach ($suggestions as $suggestion): ?>
@@ -146,7 +158,11 @@ if (!$task) {
                 <p>No hay sugerencias anteriores.</p>
             <?php endif; ?>
         </div>
+        <br>
+        <div class="text-center">
         <a href="about.php" class="btn btn-secondary text-white px-5 py-3 rounded-pill">Volver</a>
+        </div>
+        
     </div>
 </div>
     <hr>
