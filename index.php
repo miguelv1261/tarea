@@ -1,3 +1,8 @@
+<?php
+include_once "login_handler.php";
+//print_r($_SESSION["username"]);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

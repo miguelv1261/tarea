@@ -33,7 +33,7 @@
                     <div class="col-lg-6 col-xl-4 wow fadeIn" data-wow-delay=".3s">
                         <div class="blog-item position-relative bg-light rounded">
                             <img src="img/blog-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            <span class="position-absolute px-4 py-3 bg-primary text-white rounded animated fadeInUp" style="top: -28px; right: 29%;">Inicar Sesión</span>
+                            <span class="position-absolute px-4 py-3 bg-primary text-white rounded animated fadeInUp" style="top: -28px; right: 31%;">Inicar Sesión</span>
                             <br>
                             <br>
                             <br>
