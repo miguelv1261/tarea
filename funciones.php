@@ -1,9 +1,9 @@
 <?php
 include "connect.php";
 
-// Obtener el número total de tareas
+// Obtener el número total de tareas DISPONIBLES
 function getTotalTasks($conn) {
-    $sql = "SELECT COUNT(*) AS total_tasks FROM Tasks";
+    $sql = "SELECT COUNT(*) AS total_tasks FROM Tasks WHERE status ='DISPONIBLE'";
     $result = $conn->query($sql);
     $total_tasks = 0;
 
@@ -12,6 +12,30 @@ function getTotalTasks($conn) {
         $total_tasks = $row["total_tasks"];
     }
     return $total_tasks;
+}
+// Obtener el número total de tareas FINALIZADAS
+function getTotalTasksDone($conn) {
+    $sql = "SELECT COUNT(*) AS total_tasks FROM Tasks WHERE status ='FINALIZADO'";
+    $result = $conn->query($sql);
+    $total_tasksd = 0;
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $total_tasksd = $row["total_tasks"];
+    }
+    return $total_tasksd;
+}
+// Obtener el número total de tareas EN PROGESO
+function getTotalTasksPro($conn) {
+    $sql = "SELECT COUNT(*) AS total_tasks FROM Tasks WHERE status ='EN PROGRESO'";
+    $result = $conn->query($sql);
+    $total_tasksp = 0;
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $total_tasksp = $row["total_tasks"];
+    }
+    return $total_tasksp;
 }
 
 // Obtener el número total de usuarios
@@ -29,7 +53,7 @@ function getTotalUsers($conn) {
 
 // Obtener detalles de una tarea
 function getTaskDetails($conn, $task_id) {
-    $sql = "SELECT title, description, price, status, created_at, updated_at FROM Tasks WHERE id = ?";
+    $sql = "SELECT title, description, price, status,subjet, created_at, updated_at FROM Tasks WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $task_id);
     $stmt->execute();
@@ -44,7 +68,7 @@ function getTaskDetails($conn, $task_id) {
 
 // Obtener todas las tareas
 function getAllTasks($conn) {
-    $sql = "SELECT id, title, description FROM Tasks";
+    $sql = "SELECT id, title, description, subjet FROM Tasks";
     $result = $conn->query($sql);
     $tasks = [];
 
@@ -80,4 +104,20 @@ function getSuggestions($conn, $task_id) {
     }
     return $suggestions;
 }
+//
+function getUserByUsername($conn, $username) {
+    $sql = "SELECT id, username, password_hash, email FROM Users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return null;
+    }
+}
+
+
 ?>

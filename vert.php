@@ -123,13 +123,13 @@ if (!$task) {
             <h2 class="card-header">Hacer una Sugerencia</h2>
             <div class="card-body">
             <form method="post">
-                <div class="form-group">
-                    <label for="suggested_price">Precio Sugerido:</label>
-                    <input type="number" step="0.01" class="form-control" id="suggested_price" name="suggested_price" required>
+                <div class="form-group col-sm-6">
+                    <label for="suggested_price">Usuario Paga:</label>
+                    <input type="number" step="0.01" class="form-control " id="suggested_price" name="suggested_price"  required>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-sm-6">
                     <label for="suggested_time">Tiempo Sugerido:</label>
-                    <input type="text" class="form-control" id="suggested_time" name="suggested_time" required>
+                    <input type="text" class="form-control " id="suggested_time" name="suggested_time" required>
                 </div>
                 <br>
                 <div class="text-center">

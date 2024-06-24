@@ -77,7 +77,7 @@ $tasks = getAllTasks($conn);
             </div>
         </div>
         <!-- Page Header End -->
-
+        
 
         <!-- Fact Start -->
         <?php   include "fact.php";?>
@@ -86,16 +86,33 @@ $tasks = getAllTasks($conn);
 
                 <div class="container">
                 <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
-                    
                     <h1>TAREAS DISPONIBLES</h1>
+                    <div class="blog-btn d-flex justify-content-between position-relative px-3" style="margin-top: 0px;">
+                                <div class="blog-btn-icon btn btn-secondary px-4 py-3 rounded-pill ">
+                                    <div class="blog-icon-1">
+                                        <p class="text-white px-2">Nueva Tarea<i class="fa fa-plus ms-2"></i></p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                 </div>
+                            
                     <div class="row">
                     <?php
+                    $materia_colores = [
+                        'MATEMATICA' => 'bg-math',
+                        'Ciencias' => 'bg-science',
+                        'Historia' => 'bg-history',
+                        'LENGUAJE' => 'bg-language',
+                        // Agrega más materias y colores según sea necesario
+                    ];
                         if (!empty($tasks)) {
                             foreach ($tasks as $task) {
+                                $materia = $task["subjet"];
+                                $color_class = isset($materia_colores[$materia]) ? $materia_colores[$materia] : 'bg-default';
                                 echo '
                                 <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay=".3s">
-                                    <div class="services-item bg-light">
+                                    <div class="services-item ' . htmlspecialchars($color_class) . '">
                                         <div class="p-4 text-center services-content">
                                             <div class="services-content-icon">
                                                 <i class="fa fa-code fa-7x mb-4 text-primary"></i>
