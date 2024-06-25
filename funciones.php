@@ -68,7 +68,21 @@ function getTaskDetails($conn, $task_id) {
 
 // Obtener todas las tareas
 function getAllTasks($conn) {
-    $sql = "SELECT id, title, description, subjet FROM Tasks";
+    $sql = "SELECT id, title, description, subjet, status FROM Tasks";
+    $result = $conn->query($sql);
+    $tasks = [];
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $tasks[] = $row;
+        }
+    }
+    return $tasks;
+}
+// Obtener las tareas user
+function getTasksUser($conn) {
+    $sql = "SELECT t.*, u.* FROM tasks t
+            INNER JOIN users u ON t.user_id = u.id";
     $result = $conn->query($sql);
     $tasks = [];
 

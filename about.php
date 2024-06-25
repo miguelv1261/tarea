@@ -6,7 +6,23 @@ require_once "funciones.php";
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit; }
+
 $tasks = getAllTasks($conn);
+$status = isset($_GET['status']) ? $_GET['status'] : 'DISPONIBLE';
+switch ($status) {
+    case 'TODAS':
+        $titulo = 'TODAS LAS TAREAS';
+        break;
+    case 'FINALIZADO':
+        $titulo = 'TAREAS COMPLETAS';
+        break;
+    case 'EN PROGRESO':
+        $titulo = 'TAREAS EN PROCESO';
+        break;
+    case 'DISPONIBLE':
+        $titulo = 'TAREAS DISPONIBLES';
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,52 +100,68 @@ $tasks = getAllTasks($conn);
         <!-- Fact End -->
         <div class="container-fluid services py-5 mb-5">
 
-                <div class="container">
-                <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
-                    <h1>TAREAS DISPONIBLES</h1>
-                    <div class="blog-btn d-flex justify-content-between position-relative px-3" style="margin-top: 0px;">
-                                <div class="blog-btn-icon btn btn-secondary px-4 py-3 rounded-pill ">
-                                    <div class="blog-icon-1">
-                                        <p class="text-white px-2">Nueva Tarea<i class="fa fa-plus ms-2"></i></p>
-                                    </div>
-                                    
-                                </div>
+        <div class="container">
+    <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+        <h1><?php echo $titulo; ?></h1>
+        <div class="btn-group" role="group" aria-label="Filtro de tareas">
+        <?php
+           
+            ?>
+             <a href="about.php?status=DISPONIBLE" class="btn btn-secondary <?php echo $status === 'DISPONIBLE' ? 'active' : ''; ?>">Disponibles</a>
+            <a href="about.php?status=FINALIZADO" class="btn btn-secondary <?php echo $status === 'FINALIZADO' ? 'active' : ''; ?>">Completas</a>
+            <a href="about.php?status=EN PROGRESO" class="btn btn-secondary <?php echo $status === 'EN PROGRESO' ? 'active' : ''; ?>">En Proceso</a>
+            <a href="about.php?status=TODAS" class="btn btn-secondary <?php echo $status === 'TODAS' ? 'active' : ''; ?>">Todas</a>
+        </div>
+    </div>
+
+    <div class="row" id="task-container">
+        <?php
+        //
+         $filtered_tasks = [];
+         if ($status === 'TODAS') {
+             $filtered_tasks = $tasks;
+         } else {
+             foreach ($tasks as $task) {
+                 if ($task['status'] === $status) {
+                     $filtered_tasks[] = $task;
+                 }
+             }
+         }
+
+        // Lista de materias con iconos
+        $materias = [
+            'MATEMATICA' => 'fa-plus',
+            'Ciencias' => 'fa-flask',
+            'Historia' => 'fa-search',
+            'LENGUAJE' => 'fa-book',
+        ];
+
+        if (!empty($filtered_tasks)) {
+            foreach ($filtered_tasks as $task) {
+                $materia = $task["subjet"];
+                $color_class = isset($materias[$materia]) ? $materias[$materia] : 'bg-default';
+                echo '
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay=".3s">
+                    <div class="services-item position-relative">
+                        <span class="position-absolute px-4 py-3 bg-primary text-white rounded" style="top: -40px; right: 0px; z-index: -1;">' . htmlspecialchars($task["subjet"]) . '</span>
+                        <div class="p-4 text-center services-content">
+                            <div class="services-content-icon">
+                                <i class="fa ' . htmlspecialchars($color_class) . ' fa-7x mb-4 text-primary"></i>
+                                <h4 class="mb-3">' . htmlspecialchars($task["title"]) . '</h4>
+                                <p class="mb-4">' . htmlspecialchars($task["description"]) . '</p>
+                                <a href="vert.php?id=' . $task["id"] . '" class="btn btn-secondary text-white px-5 py-3 rounded-pill">Ver</a>
                             </div>
-                </div>
-                            
-                    <div class="row">
-                    <?php
-                    $materia_colores = [
-                        'MATEMATICA' => 'bg-math',
-                        'Ciencias' => 'bg-science',
-                        'Historia' => 'bg-history',
-                        'LENGUAJE' => 'bg-language',
-                        // Agrega más materias y colores según sea necesario
-                    ];
-                        if (!empty($tasks)) {
-                            foreach ($tasks as $task) {
-                                $materia = $task["subjet"];
-                                $color_class = isset($materia_colores[$materia]) ? $materia_colores[$materia] : 'bg-default';
-                                echo '
-                                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay=".3s">
-                                    <div class="services-item ' . htmlspecialchars($color_class) . '">
-                                        <div class="p-4 text-center services-content">
-                                            <div class="services-content-icon">
-                                                <i class="fa fa-code fa-7x mb-4 text-primary"></i>
-                                                <h4 class="mb-3">' . htmlspecialchars($task["title"]) . '</h4>
-                                                <p class="mb-4">' . htmlspecialchars($task["description"]) . '</p>
-                                                <a href="vert.php?id=' . $task["id"] . '" class="btn btn-secondary text-white px-5 py-3 rounded-pill">Ver</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>';
-                            }
-                        } else {
-                            echo "No se encontraron tareas.";
-                        }
-                    ?>
+                        </div>
                     </div>
-                </div>
+                </div>';
+            }
+        } else {
+            echo "No se encontraron tareas.";
+        }
+        ?>
+    </div>
+</div>
+
             </div>
 
 

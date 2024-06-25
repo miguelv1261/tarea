@@ -15,6 +15,14 @@ include_once "login_handler.php";
                         <div class="navbar-nav ms-auto mx-xl-auto p-0">
                             <a href="index.php" class="nav-item nav-link">Home</a>
                             <a href="about.php" class="nav-item nav-link">Tareas</a>
+                             <!-- <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Tareas</a>
+                                <div class="dropdown-menu rounded">
+                                    <a href="about.php" class="dropdown-item">Tareas Completas</a>
+                                    <a href="about.php" class="dropdown-item active">Tareas Finalizadas</a>
+                                    <a href="about.php" class="dropdown-item">Tareas En Proceso</a>
+                                </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="d-none d-xl-flex flex-shirink-0">
